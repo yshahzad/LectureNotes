@@ -1,0 +1,21 @@
+# LaTeX auxiliary and output files
+*.aux
+*.log
+*.out
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.dvi
+*.ps
+
+# Editor-specific files
+.vscode/
+*.swp  # Vim swap files
+*~      # Backup files
+
+# Overleaf-specific files
+*.synctex(busy)
