@@ -2,6 +2,8 @@
 \usepackage{setup}
 \usepackage{import}
 \usepackage{graphicx}
+\usepackage{amsmath}
+
 \graphicspath{ {./images/} }
 
 % ! Title page settings
@@ -11,6 +13,11 @@
 \newcommand{\pagedescription}{An introduction to concepts in statistically designed experiments}
 \newcommand{\pagesemester}{Winter 2025 }
 \newcommand{\pageprofessor}{Prof. Alia Sajjad}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\DeclareMathOperator{\Tr}{Tr}
+
 
 \begin{document}
 
@@ -53,7 +60,7 @@
 % \listoftheorems[ignore={remark}, title={\section{List of Theorems}}, swapnumber]
 
 This course follows the text \textit{Design of Comparative 
-Experiments by R. A. Bailey (Cambridge Series in Statistical and Probabilistic Mathematics.}
+Experiments by R. A. Bailey (Cambridge Series in Statistical and Probabilistic Mathematics.)}
 
 \section{Chapter 1. Forward Look}
 
@@ -193,7 +200,8 @@ An example of an issue in the variability might be trumpetting, where the variab
 
 A statistical test for constant variance is Bartlett's test.
 
-\subsection{Comparison among $\tau_{i}$'s}
+\subsection{Comparison among tau's}
+
 In the previous lecture, we covered the estimation of the effect of a treatment $i$, $\hat{\tau}_{i}$, and discussed 
 how the effect of any treatment is estimated by taking the mean of the observations related to that particular treatment 
 and the overall mean $(\mu_{i} - \mu)$. We saw that a linear model can speak to both these differences in treatment means 
@@ -290,6 +298,10 @@ where $\mathbb{E}(\epsilon) = 0, \; Cov(\epsilon) = \sigma^{2}I$. Also, let $W$ 
 
 \end{itemize}
 
+For clarity, note that the covariance matrix of $\epsilon$ is the matrix with $\sigma^{2}$ on the main diagonal 
+(by the assumption of constant variance) and 0 off the diagonal (due to the assumption of independence). So the assumptions to the
+theorem simply assume that the errors are independent and identically distributed with mean 0 and variance $\sigma^{2}$.
+
 \textbf{Proof: }
 
 $Y = \tau_{1} u_{1} + \cdots + \tau_{t} u_{t} + \epsilon$ with $\mathbb{E} (\epsilon) = 0$. This implies, by the linearity
@@ -300,6 +312,101 @@ $\mathbb{E} (P_{W}Y) = P_{W} \mathbb{E}(Y) = P_{W} \tau$.
 
 \textbf{Proof cont. }
 
+Note that for an arbitrary random variable $X$, $(X^{T}X) = ||X||^{2} = \sum_{i} X_{i}^{2}$. 
 
+Now, 
+\begin{align*}
+\mathbb{E} (||X||^{2}) &= \mathbb{E} \sum_{i} X_{i}^{2} \\
+&= \mathbb{E} X_{1}^{2} + \cdots + \mathbb{E} X_{N}^{2} \\
+&= \Var(X_{1}) + (\E X_{1})^{2} + \cdots + \Var(X_{n}) + (\E X_{n})^{2} \\
+&= \Var(X_{1}) + \cdots + \Var(X_{n}) + (\E X_{1})^{2} + \cdots + (\E X_{n})^{2}\\ 
+&= \sigma_{1}^{2} + \cdots + \sigma_{n}^{2} + ||E(X)||^{2} \\
+&= \Tr \Cov (X) + ||E(X)||^{2}
+\end{align*}
+
+
+Now, let $X = P_{W}Y$. Recall also that $\Var (aX) = a^{2} \Var (X)$ and that for a matrix $A$, $\Var(AX) = A \Var(X) A^{T}$.
+
+It follows that:
+\begin{align*}
+\Cov(X) &= \Cov(P_{W}Y) \\
+&= P_{W} \Cov(Y) P^{T}_{W} \\
+\intertext{since $P_{W}$ is symmetric}
+&= P_{W} \sigma^{2} I P_{W} \\ 
+&= \sigma^{2} P^{2}_{W} \\
+\intertext{since $P_{W}$ is idempotent}
+&= \sigma^{2} P_{W}
+\end{align*}
+
+It follows that $\Tr (\Cov (P_{W} Y)) = \Tr (\sigma^{2} P_{W}) = \sigma^{2} \Tr (P_{W}) = \sigma^{2} \dim W$.
+
+
+And since $|| \E (P_{W} Y) ||^{2}  = ||P_{W} \tau ||^{2}$, we have that $ \E ( || P_{W} Y ||^{2}) = \sigma^{2} \dim W + || P_{W} \tau ||^{2}$,
+which proves part i. of the theorem.
+
+\textbf{Theorem:}
+
+Assume that $\E Y = \tau \in V_{T}$ and that $\Cov Y = \sigma^{2} I$. Let $x$ and $z$ be any vector in $V_{T}$. Then 
+\begin{enumerate}
+\item[i. ] the best (that is, minimum variance) linear unbiased estimator of the scalar $x^{T}\tau$ is $x^{T} Y$. 
+\item[ii. ] the variance of the estimator $x^{T} Y$ is $||x||^{2} \sigma^{2}$.
+\item[iii. ] the covariance of $x^{T}Y$ and $z^{T} Y$ is $(x^{T}z)\sigma^{2}$.  
+\end{enumerate}
+
+\textbf{Proof:} Left as an assignment question.
+
+\section{Lecture 10}
+
+\subsection{Estimating taus}
+
+Recall that for a basis vector $u_{i}$ of the treatment subspace, $u_{i}^{T} u_{i} = r_{i}$ where $r_{i}$ is the replication 
+of treatment i. Likewise, for any vector $y \in V$, $u_{i}^{T}y$ is the sum of the values in $y$ that correspond to the plots that get
+the i-th treatment.  
+
+Thus, for a vector of responses Y, we have $u_{i}^{T}Y=$ the sum of the values of $Y_{T = i} = SUM_{T=i}$ (notation used by Bailey)
+which is also equal to $Y_{i \cdot}$ (notation used by Montgomery). Here $Y$ represents our random vector. 
+
+The same holds for our vector of observed values $y$. Thus $MEAN_{T = i} = \frac{SUM_{T = i}}{r_{i}}$ (for the random vector), and 
+$mean_{T = i} = \frac{sum_{T = i}}{r_{i}}$ (for the observed vector). Also, $u_{i} \tau = r_{i} \tau_{i}$. 
+
+Define a vector $u_{0} = (1, 1,  \cdots, 1)^{T} = \sum_{i = 1}^{t} u_{i}$. For every vector $v \in V$, define 
+$\bar{v} = \sum_{w} \frac{v_{w}}{N}$. 
+
+Also, $\mathbf{v} \cdot \mathbf{u}_0 = \sum_w v_w$
+
+Similarly, $\mathbf{Y} \cdot \mathbf{u}_0 = \sum_w Y_w = \text{SUM} = N\bar{Y}$
+
+$\mathbf{y} \cdot \mathbf{u}_0 = \sum_w y_w = N\bar{y} = \text{sum}$
+
+In order to estimate the treatment parameter $\tau_i$, let $\mathbf{x} = \frac{1}{r_i} \mathbf{u}_i$.
+Then, $\mathbf{x} \cdot \boldsymbol{\tau} = \frac{1}{r_i} \mathbf{u}_i \cdot \boldsymbol{\tau} = \tau_i$
+and $\mathbf{x} \cdot \mathbf{Y} = \frac{1}{r_i} \mathbf{u}_i \cdot \mathbf{Y} = \text{SUM}_{T=i}/r_i = \text{MEAN}_{T=i}$.
+
+According to theorem 2.6 (i), the BLUE of $\mathbf{x} \cdot \boldsymbol{\tau}$ is $\mathbf{x} \cdot \mathbf{Y}$. 
+Therefore, the BLUE of $\tau_i$ is $\text{MEAN}_{T=i}$ with the corresponding estimate $\hat{\tau}_i$, which is 
+$\text{mean}_{T=i}$.
+
+Moving from parameter estimates to those of linear combinations of parameters, consider the general 
+$l_{m} = \lambda_{1} \tau_{1} + \cdots \lambda_{t} \tau_{t}$. Here, the $\lambda_{i}$ are known as the statistician decides what
+linear combinations are of interest while the $\tau_{i}$ are parameters to be estimated. 
+
+
+Let $\mathbf{x}$ is a vector in $V_T$ such that $\mathbf{x} = \sum_{i=1}^t \frac{\lambda_i}{r_i} \mathbf{u}_i$
+
+Then
+\[
+\mathbf{x} \cdot \mathbf{Y} = \sum_{i=1}^t \frac{\lambda_i}{r_i} (\mathbf{u}_i \cdot \mathbf{Y})
+= \sum_{i=1}^t \frac{\lambda_i}{r_i} (\text{SUM})_{T=i} = \sum_{i=1}^t \frac{\lambda_i Y_i}{r_i}
+\]
+
+Also
+\[
+E(\mathbf{x} \cdot \mathbf{Y}) = \mathbf{x} \cdot E(\mathbf{Y})
+\]
+\[
+= \mathbf{x} \cdot \boldsymbol{\tau} = \sum_{i=1}^t \frac{\lambda_i}{r_i} \mathbf{u}_i \cdot \boldsymbol{\tau} = \sum_{i=1}^t \lambda_i \tau_i
+\]
+
+as $\mathbf{u}_i \cdot \boldsymbol{\tau} = r_i \tau_i$ (From our running example $\mathbf{u}_A \cdot \boldsymbol{\tau} = 4\tau_A$)
 
 \end{document}

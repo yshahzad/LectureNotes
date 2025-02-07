@@ -13,9 +13,11 @@
 \contentsline {subsubsection}{\numberline {1.2.6}Introductory Example: Rye Grass}{4}{subsubsection.1.2.6}%
 \contentsline {section}{\numberline {2}Lecture 6}{5}{section.2}%
 \contentsline {subsection}{\numberline {2.1}ANOVA Assumptions}{5}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Comparison among $\tau _{i}$'s}{5}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.2}Comparison among tau's}{5}{subsection.2.2}%
 \contentsline {section}{\numberline {3}Lecture 7}{6}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Orthogonality}{6}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}Orthogonal Projection}{7}{subsection.3.2}%
 \contentsline {section}{\numberline {4}Lecture 8}{8}{section.4}%
 \contentsline {section}{\numberline {5}Lecture 9}{8}{section.5}%
+\contentsline {section}{\numberline {6}Lecture 10}{9}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Estimating taus}{9}{subsection.6.1}%
