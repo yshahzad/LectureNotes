@@ -1,13 +1,17 @@
-\documentclass{tufte-handout}
+\documentclass{tufte-book}
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{2}
+
 \usepackage{graphicx}
 \usepackage{amsmath, amssymb}
 \usepackage{booktabs}
 \usepackage{hyperref}
+\graphicspath{ {./images/} }
 
-\title{Design of Experiments}
-\author[Yavuz Shahzad]{Yavuz Shahzad\\Winter 2025 \\
-Prof. Alia Sajjad}
+\title{Notes on MATH 558: Design of Experiments}
+\author[Yavuz Shahzad]{Lectures by Prof. Alia Sajjad\\ Notes by Yavuz Shahzad \\ Winter 2025}
 \date{}
+
 
 % Custom Commands
 \newcommand{\E}{\mathbb{E}}
@@ -19,80 +23,560 @@ Prof. Alia Sajjad}
 
 \maketitle
 
-\tableofcontents
+This course follows the text \textit{Design of Comparative 
+Experiments by R. A. Bailey (Cambridge Series in Statistical and Probabilistic Mathematics.)}
 
-\section{Introduction}
-This document provides an overview of concepts in statistically designed experiments, following the text \textit{Design of Comparative Experiments} by R.A. Bailey.
+\marginnote{Lectures 1 - 4 directly follow the following sections from Bailey's text.}
 
 \section{Stages in a Statistically Designed Experiment}
-
 \subsection{Consultation}
-A statistician's role in an experiment ideally begins early in the design process. Effective consultation requires understanding the purpose, available resources, and timeline of the study.
 
-\marginnote{\textbf{Example 1.1 (Ladybirds)}: A pesticide company tested a new pesticide, a standard pesticide, and a control (no treatment). Misconceptions about randomization led to flawed conclusions. (Bailey, p.2)}
+Ideally, the consultation process should start well before data collection begins. However, the statistician usually 
+does not have control of this. 
+
+If contacted close to the time when the experiment needs to start, one should ask enough questions to get a clear 
+idea of the experiment. Importantly, get an idea of the purpose, the resources at the researchers' disposal, 
+the timeline, etc. Ask these questions carefully because researchers may not be aware of what information is 
+necessary to design an experiment. \newline
+
+\textbf{Discussion of Example 1.1 (Ladybirds) in Bailey (pg. 2)}
+
+\textbf{Ex 1.1:} A famous company (which I shall not name) had designed an
+experiment to compare a new pesticide which they had developed, a standard pesticide, and
+‘no treatment’. They wanted to convince the regulatory authority (the Ministry of Agriculture,
+Fisheries and Foods) that their new pesticide was effective but did not harm ladybirds.
+I investigated the data from the experiment, and noticed that they had divided a field into
+three areas, applied one pesticide (or nothing) to each area, and made measurements on three
+samples from each area. I asked the people who had designed it what the design was. \textbf{They said that it was completely randomized} (see Chapter 2). I said that I could see that it was not
+completely randomized, because all the samples for each pesticide came from the same area
+of the field. They replied that it must be completely randomized because there were no blocks
+(see Chapter 4) and it was not a Latin square (see Chapter 6). In defense of their argument
+they quoted a respectable textbook which gives only these three designs. \newline
+
+This anecdote goes to show that misconceptions about experimental design are prevalent in the scientific community. 
+A statistician should keep this in mind when consulting for experts in other fields. \newline
 
 \subsection{Data Collection}
-A well-designed experiment ensures that data collection is structured for reliable analysis.
 
-\begin{itemize}
-  \item Each observational unit should have its own row in the dataset.
-  \item Treatments should be assigned in a structured manner.
-  \item Data should be retained in raw form to prevent errors.
-\end{itemize}
+The (statistical) design of experiments (DOE) is step by step process for planning experiments so that the data obtained 
+from the experiment can be analyzed to yield  conclusions. A good experimental design is based on clearly defining the 
+objectives of the experiment and using the available resources in effective manner to draw the required information. \newline
+
+\textbf{Important tips for data collection:}
+When collecting data, create a row for \textbf{each observational unit} and a column for each \textbf{treatment.} Include 
+a few extra columns to record any additional variables that might emerge during the observation. If the data is collected 
+by the researcher, instruct them to retain the data in its raw form to minimize copying or cleaning errors.
 
 \subsection{Data Scrutiny}
-After data collection, a statistician should inspect for anomalies.\marginnote{\textbf{Example 1.3 (Leafstripe)}: A data entry mistake caused an extreme outlier, highlighting the importance of careful data review.}
+
+After the experiment is done, the data sheets or data files should be sent to the statistician
+for analysis. Look over these as soon as possible for obvious anomalies, outliers or evidence
+of bad practice. \newline
+
+\textbf{Example 1.3 (Leafstripe)} In an experiment on leafstripe disease in barley, one measurement
+was apparently the percentage of disease on each plot. A preliminary graph of the data showed
+one outlier far away from the rest of the data. I asked to see the data for the outlying plot, and
+was given a collection of pieces of paper like those shown in Figure 1.1. It transpired that the
+agronomist had taken a random sample of ten quadrats in each plot, had inspected 100 tillers
+(sideshoots) in each quadrat to see how many were infected, and averaged the ten numbers.
+Only the average was recorded in the ‘official’ data. For the outlying plot the agronomist
+rightly thought that he did not need a calculator to add nine zeros to one nonzero number, but
+he did forget to divide the total by 10. Once I had corrected the average value for this plot, it
+fell into line with the rest of the data. \newline
+
+Also see Examples 1.4-6 in Bailey's text.
 
 \subsection{Data Analysis}
-Planning data analysis prior to conducting the experiment ensures that appropriate statistical methods are used.
 
-\section{Key Experimental Concepts}
+Your data analysis plan should be thought of before you design your experiment. 
+\textbf{The information you want to draw from your data affects the way you collect your data.} 
+
+\section{The Ideal and the Reality}
+
+\subsection{Purpose of the Experiment}
+
+In designing an effective experiment, one needs to understand the purpose of the experiment. For example, what are the 
+treatments that need to be compared? What is the research question being asked? What is the population to which the results 
+will be extended? \newline
 
 \subsection{Replication}
-Replication improves precision and generalizability. It reduces the standard error, increasing statistical power.
+
+Replication refers to the number of times each experimental treatment is tested (not replication of an experiment by other 
+researchers). Specifically, \textbf{it is the repeating of an experimental condition to different experimental units.} Each
+repetition is an independent observation under the same conditions (never a re-measurement of the same experimental unit). \newline
+
+Replication measures variability in the experiment, improves the precision of the results (will typically reduce the statistic 
+$\sqrt{\frac{s^{2}}{n}}$ and thereby tightens the confidence interval), and ensures the results are reliable and generalizable. \newline 
+
+Recall that the formula for the variance of the mean of n observations is 
+$var (\overline{X}) = \frac{\sigma^{2}}{n}.$ Increasing the replication then increases n and thereby 
+typically decreases the variance. The increase in replication may, however, increase the value of $\sigma^{2}$ thereby 
+increasing the variance if it outweighs the increase in n. \newline
+
+Increased replication typically increases power, as it raises the number of residual degrees of freedom: certain 
+families of distribution (such as the t-distribution) have slimmer tails with more degrees of freedom. \newline
 
 \subsection{False Replication}
-Repeated measurements on the same experimental unit should not be treated as independent replications.
+
+False replication occurs when repeated measurements are taken on the same experimental unit and are treated as independent 
+replications. For example, measuring the same plant multiple times and treating each measurement as an independent 
+replication, observing a slight difference due to measurement error each time. As a consequence, it overestimates 
+the amount of data available, leads to incorrect conclusions about treatment effects, and compromises the reliability of 
+the experiment. 
+
+\subsection{Defining Terms}
+
+We define the following important terms:
+
+\textbf{Definition: } An \textit{experimental unit} is the smallest unit to which a treatment can be applied. Each experimental unit is inherently different from the other, even when the same treatments are applied to them; the inherent differences between them are spoken to by the experimental error. 
+
+\textbf{Definition:} A \textbf{treatment} is the entire description of what can be applied to an experimental unit.
+
+\textbf{Definition: } An \textit{observational unit} is the smallest unit on which a response can be measured. 
 
 \subsection{Local Control}
-Blocking is used to group similar experimental units to reduce variability, thus improving efficiency.
 
-\section{Orthogonality and ANOVA Assumptions}
+Another way to reduce $var (\overline{X}) = \frac{\sigma^{2}}{n}.$ is to reduce the variance (a.k.a the experimental error) 
+$\sigma^{2}$ itself. One way of reducing the experimental error is to \textbf{group experimental units into homogeneous (alike) 
+blocks}; this grouping is called \textit{\textbf{blocking}} (discussed further in Chapter 4). \newline
+
+If done well, blocking lowers the variance $\sigma^{2}$ by removing some sources of variability from treatment contrasts. 
+If each block is representative rather than homogeneous then blocking has the opposite effect. Because blocking generally 
+reduces variance, it typically increases power. However, in the event of small sample sizes, the reduction in $\sigma^{2}$ 
+may be counteracted by the reduction in degrees of freedom, thereby lowering power. \newline
+
+Additionally, blocking increases the complexity of the design, which makes the statistical analysis and interpretation
+of the results more difficult.
+
+\subsection{Introductory Example: Rye Grass}
+
+We will often refer to the following example: (Bailey pg. 7-8)
+
+\textbf{Example 1.7 (Rye-grass)} An experiment was conducted to compare three different cultivars
+of rye-grass in combination with four quantities of nitrogen fertilizer. Two responses were
+measured: one was the total weight of dry matter harvested from each plot, and the other was
+the percentage of water-soluble carbohydrate in the crop.
+The three cultivars of rye-grass were called Cropper, Melle and Melba. The four amounts of fertilizer were 0 kg/ha, 
+80 kg/ha, 160 kg/ha and 240 kg/ha. \newline
+
+The experimental area consisted of two fields, each divided into three strips of land. Each
+strip consisted of four plots. Cultivars were sown on whole strips because it is not practicable to sow them in small
+areas unless sowing is done by hand. In contrast, it is perfectly feasible to apply fertilizers to
+smaller areas of land, such as the plots. The layout for the experiment is shown in Figure 1.2.
+Notice the pattern. Each amount of nitrogen is applied to one plot per strip, and each
+cultivar is applied to one strip per field. This pattern is the combinatorial design.
+Notice the lack of pattern. There is no systematic order in the allocation of cultivars to
+strips in each field, nor any systematic order in the allocation of amounts of nitrogen to plots
+in each strip. This lack of pattern is the randomization.
+
+\section{Lecture 6}
 
 \subsection{ANOVA Assumptions}
-Analysis of variance (ANOVA) requires that errors are independent, identically distributed, and have constant variance.
 
-\begin{itemize}
-  \item Normality of residuals can be checked using the Shapiro-Wilk test.
-  \item A residuals vs. fitted values plot can reveal heteroscedasticity.
-  \item Bartlett’s test assesses homogeneity of variances.
-\end{itemize}
+Previously, we used ANOVA to test the difference between treatment means or whether the treatment effects are non-zero. 
+Also recall that we stated some assumptions that the error terms are required to follow for the validity of the analysis. 
+These assumptions state that the errors are independent and identically distributed with mean 0 and variance $\sigma^{2}$. \newline
 
-\subsection{Orthogonality in Experimental Design}
-Orthogonal designs ensure that treatment effects can be independently estimated.
+Practically speaking, we can apply a Shapiro-Wilkes test to each the normality of the residuals of each treatment
+ mean. Another standard way to test the residuals is to plot a graph. We define the residual 
+\[e_{iw} = y_{iw} - \hat{y}_{iw}\] where $\hat{y}_{iw} = \hat{\mu} + \hat{\tau}_{i} = \hat{\mu} + 
+\hat{\mu}_{i} - \hat{\mu} = \bar{y}_{i}$. \newline
 
-\marginnote{\textbf{Definition:} The treatment subspace $V_T$ consists of vectors that are constant within each treatment group.}
+In order to test the assumption of constant variance, we will graph (in a scatter plot) the model residuals against factor 
+levels. This scatter plot can reveal the differences in the variability across different levels. By default, R uses standardized 
+residuals.\newline
 
-\section{Projection and Estimation in Linear Models}
+An example of an issue in the variability might be trumpetting, where the variability in the residuals increases as the 
+treatment mean increases. This is visible in the Residuals vs Fitted plot. \newline
+
+A statistical test for constant variance is Bartlett's test.
+
+\subsection{Comparison among tau's}
+
+In the previous lecture, we covered the estimation of the effect of a treatment $i$, $\hat{\tau}_{i}$, and discussed 
+how the effect of any treatment is estimated by taking the mean of the observations related to that particular treatment 
+and the overall mean $(\mu_{i} - \mu)$. We saw that a linear model can speak to both these differences in treatment means 
+and their associated standard errors. However, what if we concern ourselves with estimating linear combinations of taus, 
+such as $\tau_{1} - \tau_{2}$ or $\frac{\tau_{1} + \tau_{2}}{2} + \frac{tau_{3} + \tau_{4}}{2}$. \newline
+
+
+\textbf{Def: (Contrast)} A linear combination of $\tau_{i}$'s \[l_{m} = a_{m_{k}}\tau_{1} + \cdots + a_{m_{k}} \tau_{k}\]is 
+called a contrast if $a_{m_1} + \cdots + a_{m_{k}} = 0$. \newline
+
+For example, the combinations $\frac{\tau_{1} + \tau_{2}}{2} + \frac{tau_{3} + \tau_{4}}{2}$ and $\tau_{1} - \tau_{2}$ are 
+contrasts. 
+
+\section{Lecture 7}
+
+\subsection{Orthogonality}
+
+Orthogonality is important in DOE because it corresponds to zero correlation among the estimators of interest. 
+Experimental analysis of an orthogonal design is usually straightforward because you can estimate each main effect 
+and interaction independently. Therefore, any procedures in the analysis of experimental designs are based on the 
+decomposition of data vectors into orthogonal components. \newline
+
+\textbf{Def: (Orthogonal Design)} Orthogonal designs are experiments where the treatment factors are arranged in such a way 
+that their effects can be independently estimated. This independence ensures no confounding between factors and allows for 
+straightforward interpretation of results. \newline
+
+Recall that we represented the set of all experimental units as $\Omega$. We can associate an N-dimensional vector space $V$ 
+with $\Omega$. This space $V$ has vectors of the form $v = (v_{1}, \cdots, v_{N})$. The treatment subspace of $V$ is the space 
+generated by the vectors which are constant on each treatment. In other words, $v \in V_{T}$ if the components $v_{(i)}$ are 
+equal for $i$ corresponding to the same treatment. We will denote the treatment subspace by $V_{T}$. See a visualization below: \newline
+
+\sidenote{
+\includegraphics[width=\marginparwidth]{images/TreatmentSubspace.png}
+\captionof{This will be our running example over the coming few lectures.}
+}
+
+A vector $v \in V$ is a treatment vector if $v \in V_{T}$. You can see that the given $v_{1}$ is a treatment vector because 
+for each entry corresponding to treatment C, $v_{1} = 0$. Likewise for treatments A and B, $v_{1} = -1$ and $v_{1} = 1$, 
+respectively. In fact, vector $v_{1}$ represents the contrast $\tau_{A} - \tau_{B}$.\newline
+
+A vector space itself, $V_{T}$ has an orthogonal basis. These are given in the figure above,and their construction is as to be 
+expected. In our three-treatment example, $V_{T}$ is a three dimensional subspace, and each of the orthogonal basis vectors 
+corresponds to some treatment. Where the experimental unit is in the associated treatment, the basis vector takes the value 
+of 1, and takes the value of 0 otherwise. \newline
+
+For each treatment $i$, let $u_{i}$ be the vector whose value on the plot $\omega$ is 1 if plot $\omega$ gets the treatment 
+$i$ and 0 otherwise. Then the orthonormal basis is composed of all $u_{i}$ for $i \in T$. Note that every vector in $V_{T}$ is 
+a unique combination of $u_{i}$. \newline
+
+It follows that (using notation from linear algebra) $u_{i}^{T}u_{j} = 0$ when $i \neq j$, and $u_{i}^{T}u_{i} = r_{i}$ where 
+$r_{i}$is the replication of treatment $i$.\newline
 
 \subsection{Orthogonal Projection}
-If $V$ is the space of experimental units and $V_T$ is the treatment subspace, then $V$ can be decomposed as:
-\[ V = V_T \oplus V_T^\perp \]
-where $V_T^\perp$ is the orthogonal complement of $V_T$.
 
-\subsection{Estimating Treatment Effects}
-The best linear unbiased estimator (BLUE) for a treatment effect $\tau_i$ is given by the sample mean for that treatment:
-\[ \hat{\tau}_i = \frac{1}{r_i} \sum_{T=i} Y_i \]
+If $W$ is a subspace of $V$then the orthogonal complement of $W$ is denoted by 
+$W^{\perp} := \{v \in V : v \perp w \;\forall w \in W \}$. \newline
 
-\subsection{Contrast and Hypothesis Testing}
-A contrast is a linear combination of treatment effects that sums to zero:
-\[ l_m = a_1 \tau_1 + a_2 \tau_2 + \dots + a_t \tau_t \quad \text{where } \sum a_i = 0. \]
+\textbf{Theorem:} Let $W$ be a subspace of $V$. Then the following holds:
 
-\subsection{Projection in ANOVA}
-The projection matrix for a subspace $W$ satisfies:
-\[ P_W^2 = P_W, \quad P_W^T = P_W, \quad \text{and } \text{Tr}(P_W) = \dim(W). \]
+\begin{enumerate}
+    \item[i.] $W^{\perp}$ is also a subspace of $V$.
+    \item[ii.] $(W^{\perp})^{\perp} = W$.
+    \item[iii.] $ \dim (W^{\perp}) = \dim(V) - \dim(W)$.
+    \item[iv.] $V$ is the direct sum $W \oplus W^{\perp}$.
+    
+\end{enumerate}
 
-\section{Conclusion}
-Statistical design principles help ensure valid and efficient experiments. This document provides an introduction to key ideas such as replication, blocking, and orthogonality in experimental design.
+Item iv means that given any vector $v \in V$, there are unique vectors $x \in W, \; z \in W^{\perp}$ such that
+$v \ x + z$. We call $x$ the orthogonal projection of $v$ onto $W$ and denote it by $x = P_{W}(v)$. Since orthogonal 
+projection is a linear transformation, it can also be represented by an N x N matrix.
+
+\begin{enumerate}
+\item[v.] The orthogonal projection of a vector $v \in V$,denoted by $P^{\perp}_{W}(v)$, is given by $P^{\perp}_{W}(v) = z = v - x$.
+
+\item[vi.] For a fixed vector $v \in V$ and a vector $w \in W$, the sum of squares of the differences is: \[\sum_{w \in W} (v - w)^{2} = ||v - w||^{2}\]
+
+This sum is minimized when $w = P_{W}v$.
+
+\item[vii.] If $\{ u_{1}, \cdots , u_{n}\}$ is an orthogonal basis for W, then the projection of $v$ onto $W$ is $P_{W}v = \frac{v^{T}u_{1}}{||u_{1}||^{2}} u_{1} + \cdots + \frac{v^{T}u_{n}}{||u_{n}||^{2}} u_{n}$.
+
+\end{enumerate}
+
+Let $V = \mathbb{R}^{3}$ spanned by $e_{1}, e_{2}, e_{3}$. Let $W \subseteq V$, where $W$ is spanned by $e_{1}, e_{2}$.  The 
+orthogonal projection of $v$ onto $W$ is $\frac{v^{T}e_{1}}{||e_{1}||^{2}} e_{1} +  \frac{v^{T}e_{2}}{||e_{2}||^{2}} e_{2} 
+= \; (v_{1}, v_{2}, 0)^{T}$.\newline
+
+The projection can also be represented as a matrix since 
+
+\begin{math}
+P_{W}v = \frac{u_{1}v^{T}}{||u_{1}||^{2}}u_{1}  + \cdots + \frac{u_{n}v^{T} }{||u_{n}||^{2}}u_{n}  \in \mathbb{R}^{N \times N}
+\end{math}
+
+Note that the matrix $P_{W}$ is symmetric ($P^{T}_{W} = P_{W}$) and idempotent ($(P_{W})^{2} = P_{W}$), and that the trace of 
+$P_{W}$ is equal to the dimension of $W$.
+
+\section{Lecture 8}
+
+Two contrasts are said to be orthogonal if the sum of products of their corresponding coefficients is zero. That is, for two 
+contrasts
+$l_{m} = a_{m_{1}}\tau_{1} + a_{m_{2}}\tau_{2} + \cdots + a_{m_{t}}$ and 
+$l_{n} = a_{n_{1}}\tau_{1} + a_{n_{2}}\tau_{2} + \cdots + a_{n_{t}}$ are orthogonal iff 
+$a_{m_{1}} a_{n_{1}} + \cdots + a_{m_{t}} a_{n_{t}} = 0$.
+
+Orthogonality in the contrasts ensures that the contrasts are independently distributed. 
+
+The vector $\tau$ in the previous table is a vector of unknown parameters. We also know that $\tau \in V_{T}$. 
+Therefore it can be written as a linear combination of the vectors in the orthogonal basis of $V_{T}$. That is,
+$\tau = \tau_{A} u_{A} + \tau_{B} u_{B} + \tau_{C} u_{c}$.
+
+\textbf{Theorem: } Consider the linear model
+\begin{equation}
+Y = \tau_{1} u_{1} + \cdots + \tau_{t} u_{t} + \epsilon
+\end{equation}
+
+where $\mathbb{E}(\epsilon) = 0, \; Cov(\epsilon) = \sigma^{2}I$. Also, let $W$ be a subspace of $V$. Then the following hold:
+
+\begin{itemize}
+
+  \item[i.] $\mathbb{E} (P_{W} Y) = P_{W} (\mathbb{E}(Y)) = P_{W}\tau$.
+  \item[ii. ] $\mathbb{E}(||P_{W} (Y)||^{2}) = ||P_{W} \tau||^{2} = \dim (W) \sigma^{2}$
+
+\end{itemize}
+
+For clarity, note that the covariance matrix of $\epsilon$ is the matrix with $\sigma^{2}$ on the main diagonal 
+(by the assumption of constant variance) and 0 off the diagonal (due to the assumption of independence). So the assumptions to 
+the theorem simply assume that the errors are independent and identically distributed with mean 0 and variance $\sigma^{2}$.\newline
+
+\textbf{Proof: }
+
+$Y = \tau_{1} u_{1} + \cdots + \tau_{t} u_{t} + \epsilon$ with $\mathbb{E} (\epsilon) = 0$. This implies, by the linearity
+of expectation that $\mathbb{E} (Y) = \tau \in V_{T}$ and $Cov(Y) = \sigma^{2}I$. Hence, it follows that 
+$\mathbb{E} (P_{W}Y) = P_{W} \mathbb{E}(Y) = P_{W} \tau$.
+
+\section{Lecture 9}
+
+\textbf{Proof cont. }
+
+Note that for an arbitrary random variable $X$, $(X^{T}X) = ||X||^{2} = \sum_{i} X_{i}^{2}$. 
+
+Now, 
+\begin{align*}
+\mathbb{E} (||X||^{2}) &= \mathbb{E} \sum_{i} X_{i}^{2} \\
+&= \mathbb{E} X_{1}^{2} + \cdots + \mathbb{E} X_{N}^{2} \\
+&= \Var(X_{1}) + (\E X_{1})^{2} + \cdots + \Var(X_{n}) + (\E X_{n})^{2} \\
+&= \Var(X_{1}) + \cdots + \Var(X_{n}) + (\E X_{1})^{2} + \cdots + (\E X_{n})^{2}\\ 
+&= \sigma_{1}^{2} + \cdots + \sigma_{n}^{2} + ||E(X)||^{2} \\
+&= \Tr \Cov (X) + ||E(X)||^{2}
+\end{align*}
+
+
+Now, let $X = P_{W}Y$. Recall also that $\Var (aX) = a^{2} \Var (X)$ and that for a matrix $A$, $\Var(AX) = A \Var(X) A^{T}$.
+
+It follows that:
+\begin{align*}
+\Cov(X) &= \Cov(P_{W}Y) \\
+&= P_{W} \Cov(Y) P^{T}_{W} \\
+\intertext{since $P_{W}$ is symmetric}
+&= P_{W} \sigma^{2} I P_{W} \\ 
+&= \sigma^{2} P^{2}_{W} \\
+\intertext{since $P_{W}$ is idempotent}
+&= \sigma^{2} P_{W}
+\end{align*}
+
+It follows that $\Tr (\Cov (P_{W} Y)) = \Tr (\sigma^{2} P_{W}) = \sigma^{2} \Tr (P_{W}) = \sigma^{2} \dim W$.
+
+
+And since $|| \E (P_{W} Y) ||^{2}  = ||P_{W} \tau ||^{2}$, we have that $ \E ( || P_{W} Y ||^{2}) = \sigma^{2} \dim W + || P_{W} \tau ||^{2}$,
+which proves part i. of the theorem.\newline
+
+\textbf{Theorem:}
+
+Assume that $\E Y = \tau \in V_{T}$ and that $\Cov Y = \sigma^{2} I$. Let $x$ and $z$ be any vector in $V_{T}$. Then 
+
+\marginnote{Here $\Cov Y$ is the covariance matrix (or the variance-coviariance matrix) of the random vector of responses $Y$.}
+
+\begin{enumerate}
+\item[i. ] the best (that is, minimum variance) linear unbiased estimator of the scalar $x^{T}\tau$ is $x^{T} Y$. 
+\item[ii. ] the variance of the estimator $x^{T} Y$ is $||x||^{2} \sigma^{2}$.
+\item[iii. ] the covariance of $x^{T}Y$ and $z^{T} Y$ is $(x^{T}z)\sigma^{2}$.  
+\end{enumerate}
+
+\textbf{Proof:} Left as an assignment question.
+
+\section{Lecture 10}
+
+\subsection{Estimating taus}
+
+Recall that for a basis vector $u_{i}$ of the treatment subspace, $u_{i}^{T} u_{i} = r_{i}$ where $r_{i}$ is the replication 
+of treatment i. Likewise, for any vector $y \in V$, $u_{i}^{T}y$ is the sum of the values in $y$ that correspond to the plots 
+that get the i-th treatment.  \newline
+
+
+Thus, for a vector of responses Y, we have $u_{i}^{T}Y=$ the sum of the values of $Y_{T = i} = SUM_{T=i}$ (notation used by Bailey)
+which is also equal to $Y_{i \cdot}$ (notation used by Montgomery). Here $Y$ represents our random vector. 
+
+
+The same holds for our vector of observed values $y$. Thus $MEAN_{T = i} = \frac{SUM_{T = i}}{r_{i}}$ (for the random vector),
+and $mean_{T = i} = \frac{sum_{T = i}}{r_{i}}$ (for the observed vector). Also, $u_{i} \tau = r_{i} \tau_{i}$. 
+
+Define a vector $u_{0} = (1, 1,  \cdots, 1)^{T} = \sum_{i = 1}^{t} u_{i}$. For every vector $v \in V$, define 
+$\bar{v} = \sum_{w} \frac{v_{w}}{N}$. 
+
+Clearly, $\mathbf{v} \cdot \mathbf{u}_0 = \sum_w v_w$. \newline
+
+Similarly, $\mathbf{Y} \cdot \mathbf{u}_0 = \sum_w Y_w = \text{SUM} = N\bar{Y}$, and $\mathbf{y} \cdot \mathbf{u}_0 = 
+\sum_w y_w = N\bar{y} = \text{sum}$. \newline
+
+In order to estimate the treatment parameter $\tau_i$, let $\mathbf{x} = \frac{1}{r_i} \mathbf{u}_i$.
+Then, $\mathbf{x} \cdot \boldsymbol{\tau} = \frac{1}{r_i} \mathbf{u}_i \cdot \boldsymbol{\tau} = \frac{r_{i} \tau_{i}}{r_{i}}
+ = \tau_i$ and $\mathbf{x} \cdot \mathbf{Y} = \frac{1}{r_i} \mathbf{u}_i \cdot \mathbf{Y} = \text{SUM}_{T=i}/r_i = \text{MEAN}_{T=i}$.
+
+According to theorem 2.6 (i), the BLUE of $\mathbf{x} \cdot \boldsymbol{\tau}$ is $\mathbf{x} \cdot \mathbf{Y}$. 
+Therefore, the BLUE of $\tau_{i}$ is $\text{MEAN}_{T=i}$ with the corresponding estimate $\hat{\tau}_i$, which is 
+\marginnote{Because $\tau_{i} = x^{T}\tau$ and $MEAN_{T = i} = x^{T} Y$.}
+$\text{mean}_{T=i}$.
+
+Moving from parameter estimates to those of linear combinations of parameters, consider the general 
+$l_{m} = \lambda_{1} \tau_{1} + \cdots \lambda_{t} \tau_{t}$. Here, the $\lambda_{i}$ are known as the statistician decides what
+linear combinations are of interest while the $\tau_{i}$ are parameters to be estimated. 
+
+
+Let $\mathbf{x}$ be a vector in $V_T$ such that $\mathbf{x} = \sum_{i=1}^t \frac{\lambda_i}{r_i} \mathbf{u}_i$
+
+Then
+\[
+\mathbf{x} \cdot \mathbf{Y} = \sum_{i=1}^t \frac{\lambda_i}{r_i} (\mathbf{u}_i \cdot \mathbf{Y})
+= \sum_{i=1}^t \frac{\lambda_i}{r_i} (\text{SUM})_{T=i} = \sum_{i=1}^t \frac{\lambda_i Y_{i \cdot}}{r_i}
+= \lambda_1 \bar{Y_{1 \cdot}} + \cdots + \lambda_t \bar{Y_{t \cdot}}
+\]
+
+Also 
+\marginnote{As a reminder, $\E(Y) = \tau$.}
+\[
+E(\mathbf{x} \cdot \mathbf{Y}) = \mathbf{x} \cdot E(\mathbf{Y})
+= \mathbf{x} \cdot \boldsymbol{\tau} = \sum_{i=1}^t \frac{\lambda_i}{r_i} \mathbf{u}_i \cdot \boldsymbol{\tau} = \sum_{i=1}^t \lambda_i \tau_i
+\]
+
+as $\mathbf{u}_i \cdot \boldsymbol{\tau} = r_i \tau_i$ (from our running example $\mathbf{u}_A \cdot \boldsymbol{\tau} = 
+4\tau_A$)
+
+
+Let us consider some special cases for the values of $\lambda_i$.
+
+\begin{itemize}
+    \item \textbf{CASE 1:} $\lambda_i = 1$ and $\lambda_j = 0$ for $i \neq j$. The linear combination $\sum_{i=1}^{t} \lambda_i 
+    \tau_i$ reduces to $\tau_i$. From the last slide, the BLUE of $\tau_i$ is $\bar{y}_i$.
+    
+    \item \textbf{CASE 2:} $\lambda_i = 1$ and $\lambda_j = -1$ and $\lambda_k = 0$ for $k$ different from $i$ and $j$. The 
+    linear combination $\sum_{i=1}^{t} \lambda_i \tau_i$ reduces to $\tau_i - \tau_j$. The BLUE of $\tau_i - \tau_j$ is 
+    $\bar{y}_i - \bar{y}_j$.
+    
+    \item \textbf{CASE 3:} $\lambda_i = \frac{r_i}{N}$ for $i = 1,2,\dots,t$. Then 
+    \[
+    \sum_{i=1}^{t} \lambda_i \tau_i = \sum_{i=1}^{t} \frac{r_i}{N} \tau_i = \bar{\tau}.
+    \]
+\end{itemize}
+
+\section{Lecture 11}
+
+Today we cover Sum of Squares, Mean Squares and Expected Mean Squares.
+
+\textbf{Definition 1:} Let $W$ be any subspace of $V$. The sum of squares for $W$ means either $||P_{W}Y||^{2}$ or $||P_{W}y||^{2}$, 
+where $Y$ and $y$ are the random and data vectors, respectively. The sum of squares is the squared length of the orthogonal projection of
+$Y$ or $y$ on W.
+
+\textbf{Definition 2:} The mean square for $W$ is \[MS(W) = \frac{||P_{W}Y||^{2}}{\dim(W)}\]
+\marginnote{Here, $\dim{W}$ is the degrees of freedom for $W$. The definition also applies for the data vector $y$.}
+
+\textbf{Definition 3:} The expected mean square for $W$ is \[EMS(W) = \frac{\E( ||P_{W}Y||^{2} )}{\dim(W)} \]
+
+\subsection{Crude Sum of Squares for Treatments}
+
+Let $W = V_{T}$, then the sum of squares for $V_{T} = ||P_{V_{T}} Y ||^{2}$. We have seen in Lecture ? that 
+$P_{V_{T}}Y = \sum^{t}_{i = 1} \frac{SUM_{T = i}}{r_{i}} u_{i}$.
+
+Therefore, 
+\begin{align*}
+||P_{V_{T} Y||^{2}} &= P_{V_{T}}Y^{T}P_{V_{T}}Y \\
+&= \sum^{t}_{i = 1}\frac{(SUM_{T = i})^{2}}{r_{i}^{2}} (u_{i} \cdot u_{i}) \\
+\intertext{since $u_{i} \cdot u_{i} = r_{i}$} \\
+&= \sum_{i = 1}^{t} \frac{(SUM_{T = i})^{2}}{r_{i}} 
+\end{align*}
+
+The quantity $\sum_{i = 1}^{t} \frac{(SUM_{T = i})^{2}}{r_{i}}$ is called \textbf{the sum of squares for treatments.} 
+The degrees of freedom for $V = \dim(V_{T}) = t$. Therefore, mean squares for $V_{T}$ is 
+\[ MS(V_{T}) = \sum_{i = 1}^{t} \frac{(SUM_{T = i})^{2}}{r_{i} \cdot t}\]
+
+From Theorem 2.5(ii), after replacing \( W \) by \( V_{T} \), we have
+\marginnote{pg. 25 of Bailey's text states that $\E (||P_{W}Y||^{2}) = \sigma^{2} \dim W + ||P_{W} Y||^{2}$.}
+
+\begin{align*}
+  \E(||P_{V_{T}} Y||^{2}) &= \sigma^{2} \dim V_{T} + ||P_{V_{T}} \tau||^{2} \\
+  &= t\sigma^{2} + ||\tau||^{2} \\
+  \intertext{and it's easy to show, treating the squared norm as an inner product, that}
+  &= t\sigma^{2} + \sum_{i=1}^{t} r_{i} \tau_{i}^{2}
+\end{align*}
+
+\subsection{Sum of Squares for Residuals}
+
+Now consider $V_{T}^{\perp}$ which is a subspace orthogonalto $V_{T}$. We have seen that the vector $y \in V$ can 
+be expressed as a linear combination $y = P_{V_{T}}y + P_{V_{T}^{\perp}}y$. 
+\marginnote{This result is the same for the random vector $Y$.}
+
+Also, $P_{V_{T}}y = \sum_{i = 1}^{t} \hat{\tau}u_{i}$. It follows that 
+\marginnote{Here, $y$ is our observed data and $\sum_{i = 1}^{t} \hat{\tau}u_{i}$ is the vector of fitted values. Therefore, 
+the difference $P_{V_{T}}y$ is our vector of residuals.}
+\[P_{V_{T}^{\perp}}y = y - \sum_{i = 1}^{t} \hat{\tau}u_{i} \]
+
+We also have that $|| y ||^{2} = || P_{V}y||^{2} + ||P_{V_{T}^{T} y ||^{2}}$ where 
+\begin{enumerate}
+  \item $|| y ||^{2}$ is our total sum of squares
+  \item $|| P_{V}y||^{2}$ is the total (crude) sum of squares for the treatments
+  \item $||P_{V_{T}^{T} y ||^{2}}$ is the sum of squares for the residuals
+  \item $\dim (V_{T}^{\perp}) = \dim(V) - \dim(V_{T}) = N - t$ is the sum of squares for the residuals 
+\end{enumerate}
+
+It follows that $MS(residuals) = \frac{P_{V_{T}^{T} y ||^{2}}}{N - t}$. As for the EMS, 
+$\E (||P_{V_{T}^{\perp}} Y||^{2}) = \sigma^{2} \dim(V_{T}^{\perp}) + ||P_{V_{T}^{\perp}} \tau||^{2} = \sigma^{2}(N - t)$.
+Hence, the EMS for the residuals is $\sigma^{2}$. It follows that the mean square of the residuals is an unbiased estimator 
+for the variance $\sigma^{2}$.
+
+\subsection{Variance of the Estimator $x^{T}Y$}
+
+We've seen in Lecture 10 that the BLUE of $\sum_{i} \lambda_i \tau_i$ is $x^{T}Y$. From Theorem 2.6(ii), the variance of this
+estimator is $\Var(x^{T}Y) = \sigma^{2} ||x||^{2} = \sigma^{2} \sum_{i = 1}^{t} \frac{\lambda_{i}^{2}}{r_{i}}$ where 
+$x = \sum (\frac{\lambda_{i}}{r_{i}}) u_{i}$.
+
+Examples:
+\begin{itemize}
+    \item \textbf{CASE 1:} $\lambda_i = 1$ and $\lambda_j = 0$ for $i \neq j$. The BLUE of $\sum_{i=1}^t \lambda_i \tau_i$ is 
+    $\bar{y}_i$, with the variance $\frac{\sigma^2}{r_i}$.
+    
+    \item \textbf{CASE 2:} $\lambda_i = 1$ and $\lambda_j = -1$ and $\lambda_k = 0$ for $k$ different from $i$ and $j$. 
+    The linear combination $\sum_{i=1}^t \lambda_i \tau_i$ reduces to $\tau_i - \tau_j$. The BLUE of $\tau_i - \tau_j$ is 
+    $\bar{y}_i - \bar{y}_j$, with the variance $\sigma^2 \left( \frac{1}{r_i} + \frac{1}{r_j} \right)$.
+    
+    \item \textbf{CASE 3:} $\lambda_i = \frac{r_i}{N}$ for $i = 1, 2, \ldots, t$. The variance of the estimator of $\bar{\tau}$ 
+    is $\frac{\sigma^2}{N}$.
+\end{itemize}
+
+\section{Lecture 12}
+
+While designing an experiment we plan to have estimators of the contrasts with minimum variance. One way to reduce the variance
+of the estimators is to have equal replication for the treatments. The variance of the estimator of the contrast
+$\tau_{i} - \tau_{j}$ is $\sigma_{2}(\frac{1}{r_{i}} + \frac{1}{r_{j}})$.
+
+\textbf{Proposition: } If the positive numbers $r_{1}, ... , r_{n}$ have a fixed sum $N$, then the sum $\sum_{i} \frac{1}{r_{i}}$ is minimized when 
+$r_{i} = \frac{N}{t}$. 
+
+We have seen in lecture 11 that the EMS for the residuals is $\sigma^{2}$, so the unbiased estimator of 
+$\sigma^{2} \sum_{i = 1}^{t} \frac{\lambda_{i}^{2}}{r_{i}}$ $MS(residual) \sum_{i = 1}^{t} \frac{\lambda_{i}^{2}}{r_{i}}$.
+
+\subsection{Blocking}
+
+Blocking in DOE refers to dividing the experimental units into homogenous groups. This means that the experimental
+units within a group should share almost the same characteristics. The blocking processs starts at the beginning of the 
+experiment. 
+
+As an example, consider agricultural field experiments. The neighboring plots in the field are alike in terms of soil quality, 
+sublight exposure, etc. These might be grouped together into blocks of similar sizes to acheive homogenous blocks. 
+
+\textbf{Randomized block designs} \sidenote{
+  \includegraphics[width=\marginparwidth]{images/BlockDesignEx.png}
+  \captionof{Example of a block design.}
+}
+
+Blocking is used to reduce experimental error and to get more precise test results ad estimates as compared to randomized 
+designs with no blocking. We can use as many treatments and replications as our resources allow. 
+
+
+In randomized block designs, the experimental units are divided into groups, each of which contain the experimental unitst
+that are almost alike. If each block contains the same number of units, equal to or greater than the number of treatments
+to be tested, the design is called a Randomized Complete Block Design. If we have t treatments in b blocks, each of the same
+size k, then the total number of experimental units are $b \times k$. The $t$ treatments are applied randomly to the 
+experimental units of each block.
+
+In real life, it can be difficult to fulfill the ideal requirements that all blocks are the same size and all blocks are 
+complete. In this case, we should try our best to have the same sized blocks (with the same number of plots). However, we may
+compromise on the completeness requirement. 
+
+\section{Lecture 13}
+
+\subsection{Block Subspace}
+
+
 
 \end{document}
